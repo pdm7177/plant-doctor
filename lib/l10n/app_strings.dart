@@ -85,6 +85,12 @@ class AppStrings {
       'recFertilizer': 'Добриво',
       'recAdditional': 'Додатково',
       'notifPermDenied': 'Дозвіл на сповіщення не надано',
+      'privacyPolicy': 'Політика конфіденційності',
+      'deleteDataBtn': 'Видалити всі дані',
+      'deleteDataTitle': 'Видалити всі дані?',
+      'deleteDataMsg':
+          'Вся історія аналізів, нагадування та API ключ будуть видалені з пристрою. Цю дію не можна скасувати.',
+      'deleteDataDone': 'Всі дані видалено',
     },
     'en': {
       'appTitle': 'Plant Doctor',
@@ -168,6 +174,12 @@ class AppStrings {
       'recFertilizer': 'Fertilizer',
       'recAdditional': 'Additional',
       'notifPermDenied': 'Notification permission denied',
+      'privacyPolicy': 'Privacy Policy',
+      'deleteDataBtn': 'Delete all data',
+      'deleteDataTitle': 'Delete all data?',
+      'deleteDataMsg':
+          'All analysis history, reminders and API key will be deleted from your device. This action cannot be undone.',
+      'deleteDataDone': 'All data deleted',
     },
     'es': {
       'appTitle': 'Plant Doctor',
@@ -251,6 +263,12 @@ class AppStrings {
       'recFertilizer': 'Fertilizante',
       'recAdditional': 'Adicional',
       'notifPermDenied': 'Permiso de notificación denegado',
+      'privacyPolicy': 'Política de privacidad',
+      'deleteDataBtn': 'Eliminar todos los datos',
+      'deleteDataTitle': '¿Eliminar todos los datos?',
+      'deleteDataMsg':
+          'Todo el historial de análisis, recordatorios y clave API se eliminarán de tu dispositivo. Esta acción no se puede deshacer.',
+      'deleteDataDone': 'Todos los datos eliminados',
     },
     'ru': {
       'appTitle': 'Plant Doctor',
@@ -334,6 +352,12 @@ class AppStrings {
       'recFertilizer': 'Удобрение',
       'recAdditional': 'Дополнительно',
       'notifPermDenied': 'Разрешение на уведомления не предоставлено',
+      'privacyPolicy': 'Политика конфиденциальности',
+      'deleteDataBtn': 'Удалить все данные',
+      'deleteDataTitle': 'Удалить все данные?',
+      'deleteDataMsg':
+          'Вся история анализов, напоминания и API ключ будут удалены с устройства. Это действие нельзя отменить.',
+      'deleteDataDone': 'Все данные удалены',
     },
     'de': {
       'appTitle': 'Plant Doctor',
@@ -417,6 +441,12 @@ class AppStrings {
       'recFertilizer': 'Dünger',
       'recAdditional': 'Zusätzlich',
       'notifPermDenied': 'Benachrichtigungsberechtigung verweigert',
+      'privacyPolicy': 'Datenschutzrichtlinie',
+      'deleteDataBtn': 'Alle Daten löschen',
+      'deleteDataTitle': 'Alle Daten löschen?',
+      'deleteDataMsg':
+          'Die gesamte Analysehistorie, Erinnerungen und der API-Schlüssel werden vom Gerät gelöscht. Diese Aktion kann nicht rückgängig gemacht werden.',
+      'deleteDataDone': 'Alle Daten gelöscht',
     },
     'fr': {
       'appTitle': 'Plant Doctor',
@@ -500,6 +530,12 @@ class AppStrings {
       'recFertilizer': 'Fertilisant',
       'recAdditional': 'Supplémentaire',
       'notifPermDenied': 'Permission de notification refusée',
+      'privacyPolicy': 'Politique de confidentialité',
+      'deleteDataBtn': 'Supprimer toutes les données',
+      'deleteDataTitle': 'Supprimer toutes les données ?',
+      'deleteDataMsg':
+          "Tout l'historique d'analyses, les rappels et la clé API seront supprimés de votre appareil. Cette action est irréversible.",
+      'deleteDataDone': 'Toutes les données supprimées',
     },
   };
 
@@ -577,6 +613,11 @@ class AppStrings {
   String get languageRu => get('languageRu');
   String get languageDe => get('languageDe');
   String get languageFr => get('languageFr');
+  String get privacyPolicy => get('privacyPolicy');
+  String get deleteDataBtn => get('deleteDataBtn');
+  String get deleteDataTitle => get('deleteDataTitle');
+  String get deleteDataMsg => get('deleteDataMsg');
+  String get deleteDataDone => get('deleteDataDone');
   String get recWatering => get('recWatering');
   String get recLight => get('recLight');
   String get recTemperature => get('recTemperature');

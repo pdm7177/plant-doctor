@@ -120,4 +120,14 @@ class StorageService {
     });
     await prefs.setStringList(_remindersKey, list);
   }
+
+  Future<void> clearAllData() async {
+    final analyses = await loadAnalyses();
+    for (final a in analyses) {
+      final file = File(a.imagePath);
+      if (await file.exists()) await file.delete();
+    }
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.clear();
+  }
 }
