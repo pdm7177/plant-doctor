@@ -7,6 +7,7 @@ import '../l10n/locale_provider.dart';
 import '../models/plant_analysis.dart';
 import '../services/openai_service.dart';
 import '../services/storage_service.dart';
+import '../services/supabase_service.dart';
 import 'result_screen.dart';
 import 'settings_screen.dart';
 import 'paywall_screen.dart';
@@ -24,6 +25,7 @@ class _AnalyzeScreenState extends State<AnalyzeScreen> {
   final _picker = ImagePicker();
   final _openAI = OpenAIService();
   final _storage = StorageService();
+  final _supabase = SupabaseService();
 
   Future<void> _pickImage(ImageSource source) async {
     final picked = await _picker.pickImage(
@@ -118,6 +120,7 @@ class _AnalyzeScreenState extends State<AnalyzeScreen> {
 
       await _storage.saveAnalysis(analysis);
       await _storage.incrementAnalysisCount();
+      await _supabase.saveAnalysis(analysis, s.aiLanguageName);
 
       if (!mounted) return;
       await Navigator.push(

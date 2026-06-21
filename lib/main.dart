@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'l10n/locale_provider.dart';
 import 'screens/main_screen.dart';
 import 'services/notification_service.dart';
@@ -7,6 +8,10 @@ import 'services/notification_service.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await NotificationService.instance.init();
+  await Supabase.initialize(
+    url: 'https://ununlomccxmxmmgsvnwy.supabase.co',
+    publishableKey: 'sb_publishable_jUmhmARxqPdOIBSKfYEYaw_fmDWRT7H',
+  );
   final localeProvider = LocaleProvider();
   await localeProvider.load();
   runApp(
