@@ -27,7 +27,9 @@
       "PowerShell(winget install *)",
       "PowerShell(git push *)",
       "PowerShell(cd D:\\\\Codex\\\\plant_doctor; $proc = Get-Process flutter -ErrorAction SilentlyContinue; if \\($proc\\) { \"Flutter running: $\\($proc.Count\\) process\\(es\\)\" } else { \"No flutter process found\" })",
-      "PowerShell(New-Item *)"
+      "PowerShell(New-Item *)",
+      "PowerShell(supabase *)",
+      "PowerShell(npm *)"
     ]
   }
 }

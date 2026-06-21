@@ -79,6 +79,9 @@ class AppStrings {
       'languageDe': 'Deutsch',
       'languageFr': 'Français',
       'deleteAnalysisConfirm': 'Видалити "{name}" з історії?',
+      'loginSubtitle': 'Діагностика рослин за допомогою ШІ',
+      'loginWithGoogle': 'Увійти через Google',
+      'loginPrivacyNote': 'Входячи, ви погоджуєтесь з Політикою конфіденційності',
       'recWatering': 'Полив',
       'recLight': 'Освітлення',
       'recTemperature': 'Температура',
@@ -168,6 +171,9 @@ class AppStrings {
       'languageDe': 'Deutsch',
       'languageFr': 'Français',
       'deleteAnalysisConfirm': 'Delete "{name}" from history?',
+      'loginSubtitle': 'AI-powered plant health diagnosis',
+      'loginWithGoogle': 'Sign in with Google',
+      'loginPrivacyNote': 'By signing in, you agree to our Privacy Policy',
       'recWatering': 'Watering',
       'recLight': 'Light',
       'recTemperature': 'Temperature',
@@ -257,6 +263,9 @@ class AppStrings {
       'languageDe': 'Deutsch',
       'languageFr': 'Français',
       'deleteAnalysisConfirm': '¿Eliminar "{name}" del historial?',
+      'loginSubtitle': 'Diagnóstico de plantas con IA',
+      'loginWithGoogle': 'Iniciar sesión con Google',
+      'loginPrivacyNote': 'Al iniciar sesión, aceptas nuestra Política de privacidad',
       'recWatering': 'Riego',
       'recLight': 'Luz',
       'recTemperature': 'Temperatura',
@@ -346,6 +355,9 @@ class AppStrings {
       'languageDe': 'Deutsch',
       'languageFr': 'Français',
       'deleteAnalysisConfirm': 'Удалить "{name}" из истории?',
+      'loginSubtitle': 'Диагностика растений с помощью ИИ',
+      'loginWithGoogle': 'Войти через Google',
+      'loginPrivacyNote': 'Входя, вы соглашаетесь с Политикой конфиденциальности',
       'recWatering': 'Полив',
       'recLight': 'Освещение',
       'recTemperature': 'Температура',
@@ -435,6 +447,9 @@ class AppStrings {
       'languageDe': 'Deutsch',
       'languageFr': 'Français',
       'deleteAnalysisConfirm': '"{name}" aus Verlauf löschen?',
+      'loginSubtitle': 'KI-gestützte Pflanzendiagnose',
+      'loginWithGoogle': 'Mit Google anmelden',
+      'loginPrivacyNote': 'Durch die Anmeldung stimmst du unserer Datenschutzrichtlinie zu',
       'recWatering': 'Bewässerung',
       'recLight': 'Licht',
       'recTemperature': 'Temperatur',
@@ -524,6 +539,9 @@ class AppStrings {
       'languageDe': 'Deutsch',
       'languageFr': 'Français',
       'deleteAnalysisConfirm': 'Supprimer « {name} » de l\'historique ?',
+      'loginSubtitle': 'Diagnostic de plantes par IA',
+      'loginWithGoogle': 'Se connecter avec Google',
+      'loginPrivacyNote': 'En vous connectant, vous acceptez notre Politique de confidentialité',
       'recWatering': 'Arrosage',
       'recLight': 'Lumière',
       'recTemperature': 'Température',
@@ -613,6 +631,9 @@ class AppStrings {
   String get languageRu => get('languageRu');
   String get languageDe => get('languageDe');
   String get languageFr => get('languageFr');
+  String get loginSubtitle => get('loginSubtitle');
+  String get loginWithGoogle => get('loginWithGoogle');
+  String get loginPrivacyNote => get('loginPrivacyNote');
   String get privacyPolicy => get('privacyPolicy');
   String get deleteDataBtn => get('deleteDataBtn');
   String get deleteDataTitle => get('deleteDataTitle');

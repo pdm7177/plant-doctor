@@ -5,6 +5,39 @@ class SupabaseService {
   static SupabaseClient get _db => Supabase.instance.client;
 
   bool get isSignedIn => _db.auth.currentUser != null;
+  User? get currentUser => _db.auth.currentUser;
+
+  Future<void> signInWithGoogle() async {
+    await _db.auth.signInWithOAuth(
+      OAuthProvider.google,
+      redirectTo: 'com.example.plant_doctor://login-callback/',
+    );
+  }
+
+  Future<void> signOut() async {
+    await _db.auth.signOut();
+  }
+
+  // Creates profile row on first sign-in. Safe to call multiple times.
+  Future<void> ensureProfileExists() async {
+    final user = _db.auth.currentUser;
+    if (user == null) return;
+
+    final existing = await _db
+        .from('profiles')
+        .select('id')
+        .eq('id', user.id)
+        .maybeSingle();
+    if (existing != null) return;
+
+    await _db.from('profiles').insert({
+      'id': user.id,
+      'email': user.email,
+      'display_name': user.userMetadata?['full_name'] ??
+          user.email?.split('@').first,
+      'avatar_url': user.userMetadata?['avatar_url'],
+    });
+  }
 
   // Saves analysis to cloud. No-op if not signed in — activates automatically in Task 2.
   Future<void> saveAnalysis(PlantAnalysis analysis, String language) async {

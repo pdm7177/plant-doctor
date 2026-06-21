@@ -1,9 +1,12 @@
+import 'package:app_links/app_links.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'l10n/locale_provider.dart';
+import 'screens/login_screen.dart';
 import 'screens/main_screen.dart';
 import 'services/notification_service.dart';
+import 'services/supabase_service.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,12 +34,51 @@ class PlantDoctorApp extends StatelessWidget {
       title: 'Plant Doctor',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFF2E7D32),
-        ),
+        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF2E7D32)),
         useMaterial3: true,
       ),
-      home: const MainScreen(),
+      home: const AuthGate(),
+    );
+  }
+}
+
+class AuthGate extends StatefulWidget {
+  const AuthGate({super.key});
+
+  @override
+  State<AuthGate> createState() => _AuthGateState();
+}
+
+class _AuthGateState extends State<AuthGate> {
+  @override
+  void initState() {
+    super.initState();
+    _handleIncomingLinks();
+  }
+
+  // Catches the OAuth deep link callback and completes the sign-in
+  void _handleIncomingLinks() {
+    AppLinks().uriLinkStream.listen((uri) {
+      Supabase.instance.client.auth.getSessionFromUrl(uri);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<AuthState>(
+      stream: Supabase.instance.client.auth.onAuthStateChange,
+      builder: (context, snapshot) {
+        // Create profile on first sign-in
+        if (snapshot.data?.event == AuthChangeEvent.signedIn) {
+          SupabaseService().ensureProfileExists();
+        }
+
+        final session = snapshot.hasData
+            ? snapshot.data!.session
+            : Supabase.instance.client.auth.currentSession;
+
+        return session != null ? const MainScreen() : const LoginScreen();
+      },
     );
   }
 }
