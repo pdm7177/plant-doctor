@@ -7,7 +7,7 @@ class PrivacyPolicyScreen extends StatelessWidget {
   const PrivacyPolicyScreen({super.key});
 
   static const Map<String, String> _policyText = {
-    'uk': '''Дата оновлення: червень 2025
+    'uk': '''Дата оновлення: червень 2026
 
 Plant Doctor — мобільний застосунок для діагностики здоров'я рослин. Ця політика пояснює, як ми обробляємо ваші дані.
 
@@ -32,8 +32,8 @@ Plant Doctor — мобільний застосунок для діагност
 
 ЗВ'ЯЗОК
 
-З питань щодо цієї політики: support@plantdoctor.app''',
-    'en': '''Last updated: June 2025
+З питань щодо цієї політики: p.dm.7177@gmail.com''',
+    'en': '''Last updated: June 2026
 
 Plant Doctor is a mobile application for plant health diagnosis. This policy explains how we handle your data.
 
@@ -58,8 +58,8 @@ You can delete all your data at any time using the button below.
 
 CONTACT
 
-For questions about this policy: support@plantdoctor.app''',
-    'es': '''Última actualización: junio de 2025
+For questions about this policy: p.dm.7177@gmail.com''',
+    'es': '''Última actualización: junio de 2026
 
 Plant Doctor es una aplicación móvil para el diagnóstico de la salud de las plantas. Esta política explica cómo manejamos tus datos.
 
@@ -84,8 +84,8 @@ Puedes eliminar todos tus datos en cualquier momento usando el botón de abajo.
 
 CONTACTO
 
-Para preguntas sobre esta política: support@plantdoctor.app''',
-    'ru': '''Дата обновления: июнь 2025
+Para preguntas sobre esta política: p.dm.7177@gmail.com''',
+    'ru': '''Дата обновления: июнь 2026
 
 Plant Doctor — мобильное приложение для диагностики здоровья растений. Эта политика объясняет, как мы обрабатываем ваши данные.
 
@@ -110,8 +110,8 @@ Plant Doctor — мобильное приложение для диагност
 
 КОНТАКТ
 
-По вопросам этой политики: support@plantdoctor.app''',
-    'de': '''Zuletzt aktualisiert: Juni 2025
+По вопросам этой политики: p.dm.7177@gmail.com''',
+    'de': '''Zuletzt aktualisiert: Juni 2026
 
 Plant Doctor ist eine mobile Anwendung zur Diagnose der Pflanzengesundheit. Diese Richtlinie erklärt, wie wir mit deinen Daten umgehen.
 
@@ -136,8 +136,8 @@ Du kannst alle deine Daten jederzeit über die Schaltfläche unten löschen.
 
 KONTAKT
 
-Bei Fragen zu dieser Richtlinie: support@plantdoctor.app''',
-    'fr': '''Dernière mise à jour : juin 2025
+Bei Fragen zu dieser Richtlinie: p.dm.7177@gmail.com''',
+    'fr': '''Dernière mise à jour : juin 2026
 
 Plant Doctor est une application mobile de diagnostic de la santé des plantes. Cette politique explique comment nous traitons vos données.
 
@@ -162,7 +162,7 @@ Vous pouvez supprimer toutes vos données à tout moment en utilisant le bouton 
 
 CONTACT
 
-Pour toute question sur cette politique : support@plantdoctor.app''',
+Pour toute question sur cette politique : p.dm.7177@gmail.com''',
   };
 
   Future<void> _confirmDelete(BuildContext context) async {
