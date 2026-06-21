@@ -30,13 +30,14 @@ class _ChatScreenState extends State<ChatScreen> {
   Future<void> _send() async {
     final text = _controller.text.trim();
     if (text.isEmpty || _loading) return;
-    final languageName = context.read<LocaleProvider>().strings.aiLanguageName;
+    final s = context.read<LocaleProvider>().strings;
+    final languageName = s.aiLanguageName;
 
     final apiKey = await _storage.loadApiKey();
     if (apiKey == null || apiKey.isEmpty) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('API key not set')),
+        SnackBar(content: Text(s.apiKeyMissing)),
       );
       return;
     }

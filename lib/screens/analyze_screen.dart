@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+import '../l10n/app_strings.dart';
 import '../l10n/locale_provider.dart';
 import '../models/plant_analysis.dart';
 import '../services/openai_service.dart';
@@ -33,14 +34,34 @@ class _AnalyzeScreenState extends State<AnalyzeScreen> {
     if (picked != null) setState(() => _image = File(picked.path));
   }
 
+  static List<String> _parseRecommendations(dynamic raw, AppStrings s) {
+    if (raw is Map) {
+      return [
+        if ((raw['watering'] ?? '').toString().isNotEmpty)
+          '${s.recWatering}: ${raw['watering']}',
+        if ((raw['light'] ?? '').toString().isNotEmpty)
+          '${s.recLight}: ${raw['light']}',
+        if ((raw['temperature'] ?? '').toString().isNotEmpty)
+          '${s.recTemperature}: ${raw['temperature']}',
+        if ((raw['fertilizer'] ?? '').toString().isNotEmpty)
+          '${s.recFertilizer}: ${raw['fertilizer']}',
+        if ((raw['additional'] ?? '').toString().isNotEmpty)
+          '${s.recAdditional}: ${raw['additional']}',
+      ];
+    }
+    return List<String>.from(raw as List? ?? []);
+  }
+
   Future<void> _analyze() async {
     if (_image == null) return;
+
+    // Capture strings before any async gap to avoid BuildContext-across-async warning
+    final s = context.read<LocaleProvider>().strings;
 
     final apiKey = await _storage.loadApiKey();
     if (!mounted) return;
 
     if (apiKey == null || apiKey.isEmpty) {
-      final s = context.read<LocaleProvider>().strings;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(s.apiKeyMissing),
@@ -70,9 +91,8 @@ class _AnalyzeScreenState extends State<AnalyzeScreen> {
     setState(() => _loading = true);
 
     try {
-      final locale = context.read<LocaleProvider>();
       final result = await _openAI.analyzePlant(
-          _image!, apiKey, locale.strings.aiLanguageName);
+          _image!, apiKey, s.aiLanguageName);
       final savedPath = await _storage.saveImage(_image!);
 
       final toxicityData = result['toxicity'] as Map<String, dynamic>?;
@@ -83,7 +103,7 @@ class _AnalyzeScreenState extends State<AnalyzeScreen> {
         healthStatus: result['health_status'] as String? ?? 'needs_attention',
         healthDescription: result['health_description'] as String? ?? '',
         problems: List<String>.from(result['problems'] as List? ?? []),
-        recommendations: List<String>.from(result['recommendations'] as List? ?? []),
+        recommendations: _parseRecommendations(result['recommendations'], s),
         careTips: List<String>.from(result['care_tips'] as List? ?? []),
         date: DateTime.now(),
         isToxic: toxicityData?['is_toxic'] as bool?,
@@ -109,7 +129,7 @@ class _AnalyzeScreenState extends State<AnalyzeScreen> {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('${context.read<LocaleProvider>().strings.error}: $e'),
+          content: Text('${s.error}: $e'),
           backgroundColor: Theme.of(context).colorScheme.error,
         ),
       );

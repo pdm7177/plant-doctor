@@ -67,7 +67,7 @@ class _ResultScreenState extends State<ResultScreen> {
       if (!mounted) return;
       if (!granted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Notification permission denied')),
+          SnackBar(content: Text(s.notifPermDenied)),
         );
         return;
       }
@@ -267,6 +267,19 @@ class _StatusBadge extends StatelessWidget {
   }
 }
 
+String _localizeWho(String who, dynamic s) {
+  switch (who.toLowerCase()) {
+    case 'cats':
+      return s.toxicCats as String;
+    case 'dogs':
+      return s.toxicDogs as String;
+    case 'children':
+      return s.toxicChildren as String;
+    default:
+      return who;
+  }
+}
+
 class _ToxicityWarning extends StatelessWidget {
   final List<String> toxicTo;
   final String details;
@@ -308,7 +321,7 @@ class _ToxicityWarning extends StatelessWidget {
               children: [
                 Text('${s.toxicTo} ',
                     style: const TextStyle(fontWeight: FontWeight.w600)),
-                ...toxicTo.map((who) => _ToxicChip(label: who)),
+                ...toxicTo.map((who) => _ToxicChip(label: _localizeWho(who, s))),
               ],
             ),
           ],

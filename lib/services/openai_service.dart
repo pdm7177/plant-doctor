@@ -21,19 +21,19 @@ Response structure:
   "problems": [
     "SYMPTOM: [what exactly is visible in the photo]. CAUSE: [why it happens — specific mechanism]. CONSEQUENCES: [what will happen if not addressed]"
   ],
-  "recommendations": [
-    "WATERING: [specific frequency, volume, method]",
-    "LIGHT: [specific location, hours of light, sun protection needed]",
-    "TEMPERATURE: [range day and night, draft tolerance]",
-    "FERTILIZER: [what, how often, which season, dosage]",
-    "ADDITIONAL: [repotting, pruning, humidity or other important points for this species]"
-  ],
+  "recommendations": {
+    "watering": "[specific frequency, volume, method — in $language, no label prefix]",
+    "light": "[specific location, hours of light, sun protection — in $language, no label prefix]",
+    "temperature": "[range day and night, draft tolerance — in $language, no label prefix]",
+    "fertilizer": "[what, how often, which season, dosage — in $language, no label prefix]",
+    "additional": "[repotting, pruning, humidity or other important points — in $language, no label prefix]"
+  },
   "care_tips": [
     "Care tip specific to this species — what is especially important to know"
   ],
   "toxicity": {
     "is_toxic": true or false,
-    "toxic_to": ["cats", "dogs", "children"],
+    "toxic_to": ["cats", "dogs", "children"],  // use these exact English codes
     "details": "Brief explanation: which parts are toxic and what is the real risk"
   },
   "watering_interval_days": 7
@@ -41,7 +41,7 @@ Response structure:
 
 If the plant is healthy — leave problems as empty array [], but in care_tips give 3-4 useful tips for optimal care of this specific plant.
 If there are problems — fill problems with specific causes, and make recommendations as practical as possible for fixing the situation.
-Always fill ALL recommendation fields (watering, light, temperature, fertilizer, additional).
+Always fill ALL recommendation fields in the recommendations object (watering, light, temperature, fertilizer, additional). Each value is plain text in $language with no label prefix.
 toxicity field: always fill it — if not toxic, set is_toxic = false and toxic_to = [].
 watering_interval_days: integer number of days between waterings, e.g. 7 means once a week.''';
   }

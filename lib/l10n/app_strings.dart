@@ -76,6 +76,12 @@ class AppStrings {
       'languageEn': 'English',
       'languageEs': 'Español',
       'deleteAnalysisConfirm': 'Видалити "{name}" з історії?',
+      'recWatering': 'Полив',
+      'recLight': 'Освітлення',
+      'recTemperature': 'Температура',
+      'recFertilizer': 'Добриво',
+      'recAdditional': 'Додатково',
+      'notifPermDenied': 'Дозвіл на сповіщення не надано',
     },
     'en': {
       'appTitle': 'Plant Doctor',
@@ -150,6 +156,12 @@ class AppStrings {
       'languageEn': 'English',
       'languageEs': 'Español',
       'deleteAnalysisConfirm': 'Delete "{name}" from history?',
+      'recWatering': 'Watering',
+      'recLight': 'Light',
+      'recTemperature': 'Temperature',
+      'recFertilizer': 'Fertilizer',
+      'recAdditional': 'Additional',
+      'notifPermDenied': 'Notification permission denied',
     },
     'es': {
       'appTitle': 'Plant Doctor',
@@ -224,6 +236,12 @@ class AppStrings {
       'languageEn': 'English',
       'languageEs': 'Español',
       'deleteAnalysisConfirm': '¿Eliminar "{name}" del historial?',
+      'recWatering': 'Riego',
+      'recLight': 'Luz',
+      'recTemperature': 'Temperatura',
+      'recFertilizer': 'Fertilizante',
+      'recAdditional': 'Adicional',
+      'notifPermDenied': 'Permiso de notificación denegado',
     },
   };
 
@@ -298,6 +316,12 @@ class AppStrings {
   String get languageUk => get('languageUk');
   String get languageEn => get('languageEn');
   String get languageEs => get('languageEs');
+  String get recWatering => get('recWatering');
+  String get recLight => get('recLight');
+  String get recTemperature => get('recTemperature');
+  String get recFertilizer => get('recFertilizer');
+  String get recAdditional => get('recAdditional');
+  String get notifPermDenied => get('notifPermDenied');
 
   String deleteAnalysisConfirm(String name) =>
       get('deleteAnalysisConfirm').replaceAll('{name}', name);
