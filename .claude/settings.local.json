@@ -24,7 +24,9 @@
       "PowerShell(Out-Null *)",
       "PowerShell($gitPaths = @\\(\"C:\\\\Program Files\\\\Git\\\\bin\\\\git.exe\", \"C:\\\\Program Files \\(x86\\)\\\\Git\\\\bin\\\\git.exe\", \"$env:LOCALAPPDATA\\\\Programs\\\\Git\\\\bin\\\\git.exe\"\\); foreach \\($p in $gitPaths\\) { if \\(Test-Path $p\\) { Write-Host \"Found: $p\" } })",
       "PowerShell(git *)",
-      "PowerShell(winget install *)"
+      "PowerShell(winget install *)",
+      "PowerShell(git push *)",
+      "PowerShell(cd D:\\\\Codex\\\\plant_doctor; $proc = Get-Process flutter -ErrorAction SilentlyContinue; if \\($proc\\) { \"Flutter running: $\\($proc.Count\\) process\\(es\\)\" } else { \"No flutter process found\" })"
     ]
   }
 }
