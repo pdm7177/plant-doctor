@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../l10n/locale_provider.dart';
 import '../models/plant_analysis.dart';
-import '../services/openai_service.dart';
-import '../services/storage_service.dart';
+import '../services/supabase_service.dart';
+import 'paywall_screen.dart';
 
 class ChatScreen extends StatefulWidget {
   final PlantAnalysis analysis;
@@ -16,8 +16,7 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   final _controller = TextEditingController();
   final _scrollController = ScrollController();
-  final _openAI = OpenAIService();
-  final _storage = StorageService();
+  final _supabase = SupabaseService();
   final List<Map<String, String>> _messages = [];
   bool _loading = false;
 
@@ -33,15 +32,6 @@ class _ChatScreenState extends State<ChatScreen> {
     final s = context.read<LocaleProvider>().strings;
     final languageName = s.aiLanguageName;
 
-    final apiKey = await _storage.loadApiKey();
-    if (apiKey == null || apiKey.isEmpty) {
-      if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(s.apiKeyMissing)),
-      );
-      return;
-    }
-
     _controller.clear();
     setState(() {
       _messages.add({'role': 'user', 'content': text});
@@ -50,14 +40,29 @@ class _ChatScreenState extends State<ChatScreen> {
     _scrollToBottom();
 
     try {
-      final reply = await _openAI.chat(
-        apiKey: apiKey,
+      final reply = await _supabase.chatWithPlant(
         plantContext: _buildContext(),
         messages: List.from(_messages),
         language: languageName,
       );
       if (!mounted) return;
       setState(() => _messages.add({'role': 'assistant', 'content': reply}));
+    } on ChatLimitException catch (e) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(s.chatLimitReached),
+          action: e.tier == 'free'
+              ? SnackBarAction(
+                  label: s.viewPlans,
+                  onPressed: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => const PaywallScreen()),
+                  ),
+                )
+              : null,
+        ),
+      );
     } catch (e) {
       if (!mounted) return;
       setState(() => _messages.add({'role': 'assistant', 'content': 'Error: $e'}));

@@ -85,6 +85,37 @@ class SupabaseService {
     }
   }
 
+  // Sends a chat turn via the chat-plant Edge Function (owner key by tier,
+  // server-side daily limit). Returns the assistant reply text.
+  // Throws ChatLimitException when the daily limit is reached.
+  Future<String> chatWithPlant({
+    required String plantContext,
+    required List<Map<String, String>> messages,
+    required String language,
+  }) async {
+    try {
+      final res = await _db.functions.invoke('chat-plant', body: {
+        'plantContext': plantContext,
+        'messages': messages,
+        'language': language,
+      });
+      final data = res.data;
+      if (data is Map && data['reply'] != null) {
+        return data['reply'] as String;
+      }
+      throw Exception('Unexpected chat response');
+    } on FunctionException catch (e) {
+      final details = e.details;
+      if (details is Map && details['error'] == 'daily_chat_limit_reached') {
+        throw ChatLimitException((details['tier'] as String?) ?? 'free');
+      }
+      final msg = (details is Map ? details['error'] : null) ??
+          e.reasonPhrase ??
+          'Chat failed';
+      throw Exception(msg);
+    }
+  }
+
   Future<void> signInWithGoogle() async {
     final googleSignIn = GoogleSignIn(
       serverClientId: '361290088528-crt087lg7kmr66os6fp7ftuaqoagbuma.apps.googleusercontent.com',
@@ -171,4 +202,10 @@ class SupabaseService {
     await _db.from('profiles').delete().eq('id', user.id);
     await _db.auth.signOut();
   }
+}
+
+// Thrown when the server-side daily chat limit (429) is reached.
+class ChatLimitException implements Exception {
+  final String tier; // 'free' | 'monthly' | 'yearly'
+  ChatLimitException(this.tier);
 }

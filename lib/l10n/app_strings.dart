@@ -29,14 +29,7 @@ class AppStrings {
       'deleteRecord': 'Видалити запис?',
       'deleteConfirm': 'Видалити',
       'cancel': 'Скасувати',
-      'apiKeyTitle': 'OpenAI API ключ',
-      'apiKeyDesc':
-          'Введіть ваш API ключ від OpenAI (platform.openai.com). Ключ зберігається тільки на вашому пристрої.',
-      'apiKeyHint': 'sk-...',
       'save': 'Зберегти',
-      'apiKeySaved': 'API ключ збережено',
-      'apiKeyEmpty': 'Введіть API ключ',
-      'apiKeyMissing': 'Спочатку додайте API ключ у налаштуваннях',
       'goToSettings': 'Налаштування',
       'error': 'Помилка',
       'toxicWarningTitle': 'Увага: токсична рослина',
@@ -56,6 +49,8 @@ class AppStrings {
       'chatTitle': 'Запитання про рослину',
       'chatHint': 'Ваше запитання...',
       'chatSend': 'Надіслати',
+      'chatLimitReached': 'Досягнуто денного ліміту повідомлень, спробуйте завтра',
+      'viewPlans': 'Тарифи',
       'wateringReminder': 'Нагадування про полив',
       'wateringReminderSet': 'Нагадування встановлено',
       'wateringReminderCancel': 'Скасувати нагадування',
@@ -125,14 +120,7 @@ class AppStrings {
       'deleteRecord': 'Delete record?',
       'deleteConfirm': 'Delete',
       'cancel': 'Cancel',
-      'apiKeyTitle': 'OpenAI API Key',
-      'apiKeyDesc':
-          'Enter your OpenAI API key (platform.openai.com). The key is stored only on your device.',
-      'apiKeyHint': 'sk-...',
       'save': 'Save',
-      'apiKeySaved': 'API key saved',
-      'apiKeyEmpty': 'Please enter an API key',
-      'apiKeyMissing': 'Please add an API key in settings first',
       'goToSettings': 'Settings',
       'error': 'Error',
       'toxicWarningTitle': 'Warning: toxic plant',
@@ -152,6 +140,8 @@ class AppStrings {
       'chatTitle': 'Plant question',
       'chatHint': 'Your question...',
       'chatSend': 'Send',
+      'chatLimitReached': 'Daily message limit reached, try again tomorrow',
+      'viewPlans': 'View plans',
       'wateringReminder': 'Watering reminder',
       'wateringReminderSet': 'Reminder set',
       'wateringReminderCancel': 'Cancel reminder',
@@ -221,14 +211,7 @@ class AppStrings {
       'deleteRecord': '¿Eliminar registro?',
       'deleteConfirm': 'Eliminar',
       'cancel': 'Cancelar',
-      'apiKeyTitle': 'Clave API de OpenAI',
-      'apiKeyDesc':
-          'Ingresa tu clave API de OpenAI (platform.openai.com). La clave se almacena solo en tu dispositivo.',
-      'apiKeyHint': 'sk-...',
       'save': 'Guardar',
-      'apiKeySaved': 'Clave API guardada',
-      'apiKeyEmpty': 'Por favor ingresa una clave API',
-      'apiKeyMissing': 'Primero agrega una clave API en los ajustes',
       'goToSettings': 'Ajustes',
       'error': 'Error',
       'toxicWarningTitle': 'Advertencia: planta tóxica',
@@ -248,6 +231,8 @@ class AppStrings {
       'chatTitle': 'Pregunta sobre la planta',
       'chatHint': 'Tu pregunta...',
       'chatSend': 'Enviar',
+      'chatLimitReached': 'Has alcanzado el límite diario de mensajes, inténtalo mañana',
+      'viewPlans': 'Ver planes',
       'wateringReminder': 'Recordatorio de riego',
       'wateringReminderSet': 'Recordatorio establecido',
       'wateringReminderCancel': 'Cancelar recordatorio',
@@ -317,14 +302,7 @@ class AppStrings {
       'deleteRecord': 'Удалить запись?',
       'deleteConfirm': 'Удалить',
       'cancel': 'Отмена',
-      'apiKeyTitle': 'OpenAI API ключ',
-      'apiKeyDesc':
-          'Введите ваш API ключ от OpenAI (platform.openai.com). Ключ хранится только на вашем устройстве.',
-      'apiKeyHint': 'sk-...',
       'save': 'Сохранить',
-      'apiKeySaved': 'API ключ сохранён',
-      'apiKeyEmpty': 'Введите API ключ',
-      'apiKeyMissing': 'Сначала добавьте API ключ в настройках',
       'goToSettings': 'Настройки',
       'error': 'Ошибка',
       'toxicWarningTitle': 'Внимание: токсичное растение',
@@ -344,6 +322,8 @@ class AppStrings {
       'chatTitle': 'Вопрос о растении',
       'chatHint': 'Ваш вопрос...',
       'chatSend': 'Отправить',
+      'chatLimitReached': 'Достигнут дневной лимит сообщений, попробуйте завтра',
+      'viewPlans': 'Тарифы',
       'wateringReminder': 'Напоминание о поливе',
       'wateringReminderSet': 'Напоминание установлено',
       'wateringReminderCancel': 'Отменить напоминание',
@@ -413,14 +393,7 @@ class AppStrings {
       'deleteRecord': 'Eintrag löschen?',
       'deleteConfirm': 'Löschen',
       'cancel': 'Abbrechen',
-      'apiKeyTitle': 'OpenAI API-Schlüssel',
-      'apiKeyDesc':
-          'Gib deinen OpenAI API-Schlüssel ein (platform.openai.com). Der Schlüssel wird nur auf deinem Gerät gespeichert.',
-      'apiKeyHint': 'sk-...',
       'save': 'Speichern',
-      'apiKeySaved': 'API-Schlüssel gespeichert',
-      'apiKeyEmpty': 'Bitte API-Schlüssel eingeben',
-      'apiKeyMissing': 'Bitte zuerst API-Schlüssel in Einstellungen hinzufügen',
       'goToSettings': 'Einstellungen',
       'error': 'Fehler',
       'toxicWarningTitle': 'Achtung: giftige Pflanze',
@@ -440,6 +413,8 @@ class AppStrings {
       'chatTitle': 'Pflanzenfrage',
       'chatHint': 'Deine Frage...',
       'chatSend': 'Senden',
+      'chatLimitReached': 'Tägliches Nachrichtenlimit erreicht, versuche es morgen',
+      'viewPlans': 'Tarife',
       'wateringReminder': 'Gieß-Erinnerung',
       'wateringReminderSet': 'Erinnerung gesetzt',
       'wateringReminderCancel': 'Erinnerung abbrechen',
@@ -509,14 +484,7 @@ class AppStrings {
       'deleteRecord': 'Supprimer l\'enregistrement ?',
       'deleteConfirm': 'Supprimer',
       'cancel': 'Annuler',
-      'apiKeyTitle': 'Clé API OpenAI',
-      'apiKeyDesc':
-          'Entrez votre clé API OpenAI (platform.openai.com). La clé est stockée uniquement sur votre appareil.',
-      'apiKeyHint': 'sk-...',
       'save': 'Enregistrer',
-      'apiKeySaved': 'Clé API enregistrée',
-      'apiKeyEmpty': 'Veuillez entrer une clé API',
-      'apiKeyMissing': 'Veuillez d\'abord ajouter une clé API dans les paramètres',
       'goToSettings': 'Paramètres',
       'error': 'Erreur',
       'toxicWarningTitle': 'Attention : plante toxique',
@@ -536,6 +504,8 @@ class AppStrings {
       'chatTitle': 'Question sur la plante',
       'chatHint': 'Votre question...',
       'chatSend': 'Envoyer',
+      'chatLimitReached': 'Limite quotidienne de messages atteinte, réessayez demain',
+      'viewPlans': 'Voir les offres',
       'wateringReminder': "Rappel d'arrosage",
       'wateringReminderSet': 'Rappel défini',
       'wateringReminderCancel': 'Annuler le rappel',
@@ -608,13 +578,7 @@ class AppStrings {
   String get deleteRecord => get('deleteRecord');
   String get deleteConfirm => get('deleteConfirm');
   String get cancel => get('cancel');
-  String get apiKeyTitle => get('apiKeyTitle');
-  String get apiKeyDesc => get('apiKeyDesc');
-  String get apiKeyHint => get('apiKeyHint');
   String get save => get('save');
-  String get apiKeySaved => get('apiKeySaved');
-  String get apiKeyEmpty => get('apiKeyEmpty');
-  String get apiKeyMissing => get('apiKeyMissing');
   String get goToSettings => get('goToSettings');
   String get error => get('error');
   String get toxicWarningTitle => get('toxicWarningTitle');
@@ -634,6 +598,8 @@ class AppStrings {
   String get chatTitle => get('chatTitle');
   String get chatHint => get('chatHint');
   String get chatSend => get('chatSend');
+  String get chatLimitReached => get('chatLimitReached');
+  String get viewPlans => get('viewPlans');
   String get wateringReminder => get('wateringReminder');
   String get wateringReminderSet => get('wateringReminderSet');
   String get wateringReminderCancel => get('wateringReminderCancel');

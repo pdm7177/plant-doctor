@@ -6,7 +6,6 @@ import '../models/plant_analysis.dart';
 
 class StorageService {
   static const String _analysesKey = 'analyses';
-  static const String _apiKeyKey = 'api_key';
   static const String _languageKey = 'app_language';
   static const int freeLimit = 5;
 
@@ -40,16 +39,6 @@ class StorageService {
       _analysesKey,
       analyses.map((a) => jsonEncode(a.toJson())).toList(),
     );
-  }
-
-  Future<void> saveApiKey(String key) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString(_apiKeyKey, key);
-  }
-
-  Future<String?> loadApiKey() async {
-    final prefs = await SharedPreferences.getInstance();
-    return prefs.getString(_apiKeyKey);
   }
 
   // Language preference

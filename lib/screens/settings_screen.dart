@@ -13,32 +13,16 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  final _controller = TextEditingController();
-  final _storage = StorageService();
-  bool _obscure = true;
-  bool _saved = false;
   int _usedCount = 0;
 
   @override
   void initState() {
     super.initState();
-    _storage.loadApiKey().then((key) {
-      if (key != null && mounted) {
-        _controller.text = key;
-        setState(() => _saved = true);
-      }
-    });
     SupabaseService().getRemainingAnalyses().then((remaining) {
       if (mounted) {
         setState(() => _usedCount = StorageService.freeLimit - remaining);
       }
     });
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
   }
 
   Future<void> _signOut() async {
@@ -64,23 +48,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
     if (confirmed == true) {
       await SupabaseService().signOut();
     }
-  }
-
-  Future<void> _save() async {
-    final s = context.read<LocaleProvider>().strings;
-    final key = _controller.text.trim();
-    if (key.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(s.apiKeyEmpty)),
-      );
-      return;
-    }
-    await _storage.saveApiKey(key);
-    if (!mounted) return;
-    setState(() => _saved = true);
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(s.apiKeySaved)),
-    );
   }
 
   @override
@@ -109,44 +76,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
               current: locale.languageCode,
               onChanged: (code) => locale.setLanguage(code),
               s: s,
-            ),
-            const SizedBox(height: 32),
-
-            // API key
-            Text(
-              s.apiKeyTitle,
-              style: theme.textTheme.titleLarge
-                  ?.copyWith(fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 8),
-            Text(s.apiKeyDesc, style: TextStyle(color: Colors.grey[600])),
-            const SizedBox(height: 20),
-            TextField(
-              controller: _controller,
-              obscureText: _obscure,
-              onChanged: (_) => setState(() => _saved = false),
-              decoration: InputDecoration(
-                hintText: s.apiKeyHint,
-                border: const OutlineInputBorder(),
-                prefixIcon: _saved
-                    ? const Icon(Icons.check_circle, color: Colors.green)
-                    : const Icon(Icons.key_outlined),
-                suffixIcon: IconButton(
-                  icon: Icon(_obscure
-                      ? Icons.visibility_outlined
-                      : Icons.visibility_off_outlined),
-                  onPressed: () => setState(() => _obscure = !_obscure),
-                ),
-              ),
-            ),
-            const SizedBox(height: 16),
-            FilledButton.icon(
-              onPressed: _save,
-              icon: const Icon(Icons.save_outlined),
-              label: Text(s.save),
-              style: FilledButton.styleFrom(
-                minimumSize: const Size(double.infinity, 52),
-              ),
             ),
             const SizedBox(height: 32),
 
