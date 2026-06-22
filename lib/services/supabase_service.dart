@@ -1,3 +1,4 @@
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../models/plant_analysis.dart';
 
@@ -7,10 +8,58 @@ class SupabaseService {
   bool get isSignedIn => _db.auth.currentUser != null;
   User? get currentUser => _db.auth.currentUser;
 
+  // Returns how many free analyses remain in the current 30-day window.
+  // Falls back to freeLimit if user is not signed in or server is unreachable.
+  Future<int> getRemainingAnalyses() async {
+    const freeLimit = 5;
+    final user = _db.auth.currentUser;
+    if (user == null) return freeLimit;
+
+    try {
+      final profile = await _db
+          .from('profiles')
+          .select('registration_date, created_at')
+          .eq('id', user.id)
+          .maybeSingle();
+      if (profile == null) return freeLimit;
+
+      // Use created_at as fallback for existing users with NULL registration_date
+      final rawDate =
+          (profile['registration_date'] ?? profile['created_at']) as String;
+      final regDate = DateTime.parse(rawDate).toLocal();
+
+      final daysSince = DateTime.now().difference(regDate).inDays;
+      final periodStart = regDate.add(Duration(days: (daysSince ~/ 30) * 30));
+
+      final rows = await _db
+          .from('analysis_history')
+          .select('id')
+          .eq('user_id', user.id)
+          .gte('created_at', periodStart.toUtc().toIso8601String());
+
+      final used = (rows as List).length;
+      return (freeLimit - used).clamp(0, freeLimit).toInt();
+    } catch (_) {
+      return freeLimit; // fail open — allow analysis if server unreachable
+    }
+  }
+
   Future<void> signInWithGoogle() async {
-    await _db.auth.signInWithOAuth(
-      OAuthProvider.google,
-      redirectTo: 'com.example.plant_doctor://login-callback/',
+    final googleSignIn = GoogleSignIn(
+      serverClientId: '361290088528-crt087lg7kmr66os6fp7ftuaqoagbuma.apps.googleusercontent.com',
+    );
+
+    final googleUser = await googleSignIn.signIn();
+    if (googleUser == null) throw Exception('Google Sign-In cancelled');
+
+    final googleAuth = await googleUser.authentication;
+    final idToken = googleAuth.idToken;
+    if (idToken == null) throw Exception('Failed to get idToken from Google');
+
+    await _db.auth.signInWithIdToken(
+      provider: OAuthProvider.google,
+      idToken: idToken,
+      accessToken: googleAuth.accessToken,
     );
   }
 
@@ -36,6 +85,7 @@ class SupabaseService {
       'display_name': user.userMetadata?['full_name'] ??
           user.email?.split('@').first,
       'avatar_url': user.userMetadata?['avatar_url'],
+      'registration_date': DateTime.now().toUtc().toIso8601String(),
     });
   }
 
@@ -60,6 +110,15 @@ class SupabaseService {
       'language': language,
       'created_at': analysis.date.toIso8601String(),
     });
+  }
+
+  Future<void> deleteAnalysisById(String id) async {
+    final user = _db.auth.currentUser;
+    if (user == null) return;
+    await _db.from('analysis_history')
+        .delete()
+        .eq('id', id)
+        .eq('user_id', user.id);
   }
 
   // Deletes all cloud data for the current user.

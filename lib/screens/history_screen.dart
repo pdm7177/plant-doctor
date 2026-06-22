@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import '../l10n/locale_provider.dart';
 import '../models/plant_analysis.dart';
 import '../services/storage_service.dart';
+import '../services/supabase_service.dart';
 import 'result_screen.dart';
 
 class HistoryScreen extends StatefulWidget {
@@ -59,6 +60,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
     if (confirmed != true) return;
 
     await _storage.deleteAnalysis(analysis.id);
+    await SupabaseService().deleteAnalysisById(analysis.id);
     final imageFile = File(analysis.imagePath);
     if (await imageFile.exists()) await imageFile.delete();
     _load();
@@ -193,7 +195,7 @@ class _HistoryCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      DateFormat('d MMM yyyy').format(analysis.date),
+                      DateFormat('d MMM yyyy, HH:mm').format(analysis.date),
                       style:
                           TextStyle(color: Colors.grey[600], fontSize: 12),
                     ),

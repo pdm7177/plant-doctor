@@ -7,8 +7,6 @@ import '../models/plant_analysis.dart';
 class StorageService {
   static const String _analysesKey = 'analyses';
   static const String _apiKeyKey = 'api_key';
-  static const String _analysisCountKey = 'analysis_count';
-  static const String _analysisMonthKey = 'analysis_month';
   static const String _languageKey = 'app_language';
   static const int freeLimit = 5;
 
@@ -52,30 +50,6 @@ class StorageService {
   Future<String?> loadApiKey() async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getString(_apiKeyKey);
-  }
-
-  // Monthly analysis counter
-  String _currentMonth() {
-    final now = DateTime.now();
-    return '${now.year}-${now.month.toString().padLeft(2, '0')}';
-  }
-
-  Future<int> getMonthlyAnalysisCount() async {
-    final prefs = await SharedPreferences.getInstance();
-    final storedMonth = prefs.getString(_analysisMonthKey);
-    if (storedMonth != _currentMonth()) {
-      await prefs.setString(_analysisMonthKey, _currentMonth());
-      await prefs.setInt(_analysisCountKey, 0);
-      return 0;
-    }
-    return prefs.getInt(_analysisCountKey) ?? 0;
-  }
-
-  Future<void> incrementAnalysisCount() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString(_analysisMonthKey, _currentMonth());
-    final count = prefs.getInt(_analysisCountKey) ?? 0;
-    await prefs.setInt(_analysisCountKey, count + 1);
   }
 
   // Language preference

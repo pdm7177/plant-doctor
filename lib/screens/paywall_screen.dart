@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../l10n/locale_provider.dart';
 import '../services/storage_service.dart';
+import '../services/supabase_service.dart';
 
 class PaywallScreen extends StatefulWidget {
   const PaywallScreen({super.key});
@@ -16,8 +17,10 @@ class _PaywallScreenState extends State<PaywallScreen> {
   @override
   void initState() {
     super.initState();
-    StorageService().getMonthlyAnalysisCount().then((c) {
-      if (mounted) setState(() => _usedCount = c);
+    SupabaseService().getRemainingAnalyses().then((remaining) {
+      if (mounted) {
+        setState(() => _usedCount = StorageService.freeLimit - remaining);
+      }
     });
   }
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../l10n/locale_provider.dart';
 import '../services/storage_service.dart';
+import '../services/supabase_service.dart';
 import 'privacy_policy_screen.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -27,8 +28,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
         setState(() => _saved = true);
       }
     });
-    _storage.getMonthlyAnalysisCount().then((c) {
-      if (mounted) setState(() => _usedCount = c);
+    SupabaseService().getRemainingAnalyses().then((remaining) {
+      if (mounted) {
+        setState(() => _usedCount = StorageService.freeLimit - remaining);
+      }
     });
   }
 
@@ -36,6 +39,31 @@ class _SettingsScreenState extends State<SettingsScreen> {
   void dispose() {
     _controller.dispose();
     super.dispose();
+  }
+
+  Future<void> _signOut() async {
+    final s = context.read<LocaleProvider>().strings;
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(s.signOutTitle),
+        content: Text(s.signOutMsg),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx, false),
+            child: Text(s.cancel),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(ctx, true),
+            style: TextButton.styleFrom(foregroundColor: Colors.red),
+            child: Text(s.signOutBtn),
+          ),
+        ],
+      ),
+    );
+    if (confirmed == true) {
+      await SupabaseService().signOut();
+    }
   }
 
   Future<void> _save() async {
@@ -169,6 +197,28 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 MaterialPageRoute(
                     builder: (_) => const PrivacyPolicyScreen()),
               ),
+            ),
+
+            const Divider(height: 32),
+
+            // Account info + sign out
+            ListTile(
+              contentPadding: EdgeInsets.zero,
+              leading: const Icon(Icons.account_circle_outlined),
+              title: Text(s.account),
+              subtitle: Text(
+                SupabaseService().currentUser?.email ?? '',
+                style: TextStyle(fontSize: 12, color: Colors.grey[600]),
+              ),
+            ),
+            ListTile(
+              contentPadding: EdgeInsets.zero,
+              leading: const Icon(Icons.logout, color: Colors.red),
+              title: Text(
+                s.signOutBtn,
+                style: const TextStyle(color: Colors.red),
+              ),
+              onTap: _signOut,
             ),
           ],
         ),

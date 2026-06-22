@@ -1,4 +1,3 @@
-import 'package:app_links/app_links.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -50,19 +49,6 @@ class AuthGate extends StatefulWidget {
 }
 
 class _AuthGateState extends State<AuthGate> {
-  @override
-  void initState() {
-    super.initState();
-    _handleIncomingLinks();
-  }
-
-  // Catches the OAuth deep link callback and completes the sign-in
-  void _handleIncomingLinks() {
-    AppLinks().uriLinkStream.listen((uri) {
-      Supabase.instance.client.auth.getSessionFromUrl(uri);
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<AuthState>(
