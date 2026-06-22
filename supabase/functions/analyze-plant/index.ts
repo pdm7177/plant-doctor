@@ -11,7 +11,7 @@ Deno.serve(async (req) => {
   }
 
   try {
-    // ── Auth (Task 2 activates this) ──────────────────────────────────────
+    // ── Auth ──────────────────────────────────────────────────────────────
     const authHeader = req.headers.get('Authorization')
     const supabase = createClient(
       Deno.env.get('SUPABASE_URL') ?? '',
@@ -24,16 +24,34 @@ Deno.serve(async (req) => {
       const { data: { user } } = await supabase.auth.getUser()
       userId = user?.id ?? null
     }
-    // ─────────────────────────────────────────────────────────────────────
 
     const { imageBase64, language } = await req.json()
     if (!imageBase64) throw new Error('imageBase64 is required')
 
-    const openaiKey = Deno.env.get('OPENAI_API_KEY')
-    if (!openaiKey) throw new Error('OpenAI API key not configured on server')
+    // ── Admin client (service role): tier lookup + history insert ─────────
+    const supabaseAdmin = createClient(
+      Deno.env.get('SUPABASE_URL') ?? '',
+      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '',
+    )
 
-    // ── Rate limit (Task 3 will add 30-day rolling check here) ───────────
-    // ─────────────────────────────────────────────────────────────────────
+    // ── Subscription tier → choose the matching OpenAI key (strict) ───────
+    let tier = 'free'
+    if (userId) {
+      const { data: profile } = await supabaseAdmin
+        .from('profiles')
+        .select('subscription_tier')
+        .eq('id', userId)
+        .maybeSingle()
+      if (profile?.subscription_tier) tier = profile.subscription_tier as string
+    }
+
+    const keyByTier: Record<string, string | undefined> = {
+      free: Deno.env.get('OPENAI_API_KEY_FREE'),
+      monthly: Deno.env.get('OPENAI_API_KEY_MONTHLY'),
+      yearly: Deno.env.get('OPENAI_API_KEY_YEARLY'),
+    }
+    const openaiKey = keyByTier[tier]
+    if (!openaiKey) throw new Error(`OpenAI key not configured for tier "${tier}"`)
 
     const lang = language ?? 'Ukrainian'
     const openaiRes = await fetch('https://api.openai.com/v1/chat/completions', {
@@ -66,29 +84,8 @@ Deno.serve(async (req) => {
     if (!jsonMatch) throw new Error('Could not parse AI response')
     const result = JSON.parse(jsonMatch[0])
 
-    // ── Save to DB if signed in ───────────────────────────────────────────
-    if (userId) {
-      const supabaseAdmin = createClient(
-        Deno.env.get('SUPABASE_URL') ?? '',
-        Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '',
-      )
-      await supabaseAdmin.from('analysis_history').insert({
-        id: crypto.randomUUID(),
-        user_id: userId,
-        plant_name: result.plant_name ?? 'Unknown plant',
-        health_status: result.health_status ?? 'needs_attention',
-        health_description: result.health_description ?? '',
-        problems: result.problems ?? [],
-        recommendations: result.recommendations ?? {},
-        care_tips: result.care_tips ?? [],
-        is_toxic: result.toxicity?.is_toxic ?? false,
-        toxic_to: result.toxicity?.toxic_to ?? [],
-        toxicity_details: result.toxicity?.details ?? '',
-        watering_interval_days: result.watering_interval_days ?? null,
-        language: lang,
-      })
-    }
-    // ─────────────────────────────────────────────────────────────────────
+    // Persistence (local + cloud history) is handled on the Flutter side to
+    // keep a single source of ids; the function only performs the analysis.
 
     return new Response(JSON.stringify(result), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },

@@ -1,3 +1,5 @@
+import 'dart:convert';
+import 'dart:io';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../models/plant_analysis.dart';
@@ -41,6 +43,45 @@ class SupabaseService {
       return (freeLimit - used).clamp(0, freeLimit).toInt();
     } catch (_) {
       return freeLimit; // fail open — allow analysis if server unreachable
+    }
+  }
+
+  // Returns the user's subscription tier: 'free' | 'monthly' | 'yearly'.
+  // Defaults to 'free' for anonymous users or on any error.
+  Future<String> getSubscriptionTier() async {
+    final user = _db.auth.currentUser;
+    if (user == null) return 'free';
+    try {
+      final profile = await _db
+          .from('profiles')
+          .select('subscription_tier')
+          .eq('id', user.id)
+          .maybeSingle();
+      return (profile?['subscription_tier'] as String?) ?? 'free';
+    } catch (_) {
+      return 'free';
+    }
+  }
+
+  // Runs plant analysis via the analyze-plant Edge Function (owner key chosen
+  // server-side by tier). Returns the parsed result JSON in the same shape the
+  // app already consumes. The session auth token is attached automatically.
+  Future<Map<String, dynamic>> analyzePlant(File image, String language) async {
+    final imageBase64 = base64Encode(await image.readAsBytes());
+    try {
+      final res = await _db.functions.invoke(
+        'analyze-plant',
+        body: {'imageBase64': imageBase64, 'language': language},
+      );
+      final data = res.data;
+      if (data is! Map) throw Exception('Unexpected analysis response');
+      return Map<String, dynamic>.from(data);
+    } on FunctionException catch (e) {
+      final details = e.details;
+      final msg = (details is Map ? details['error'] : null) ??
+          e.reasonPhrase ??
+          'Analysis failed';
+      throw Exception(msg);
     }
   }
 

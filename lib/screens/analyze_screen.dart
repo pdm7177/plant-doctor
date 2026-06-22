@@ -5,11 +5,9 @@ import 'package:provider/provider.dart';
 import '../l10n/app_strings.dart';
 import '../l10n/locale_provider.dart';
 import '../models/plant_analysis.dart';
-import '../services/openai_service.dart';
 import '../services/storage_service.dart';
 import '../services/supabase_service.dart';
 import 'result_screen.dart';
-import 'settings_screen.dart';
 import 'paywall_screen.dart';
 
 class AnalyzeScreen extends StatefulWidget {
@@ -23,7 +21,6 @@ class _AnalyzeScreenState extends State<AnalyzeScreen> {
   File? _image;
   bool _loading = false;
   final _picker = ImagePicker();
-  final _openAI = OpenAIService();
   final _storage = StorageService();
   final _supabase = SupabaseService();
 
@@ -60,41 +57,25 @@ class _AnalyzeScreenState extends State<AnalyzeScreen> {
     // Capture strings before any async gap to avoid BuildContext-across-async warning
     final s = context.read<LocaleProvider>().strings;
 
-    final apiKey = await _storage.loadApiKey();
+    // Free tier is limited to 5 analyses / 30 days; paid tiers are unlimited.
+    final tier = await _supabase.getSubscriptionTier();
     if (!mounted) return;
-
-    if (apiKey == null || apiKey.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(s.apiKeyMissing),
-          action: SnackBarAction(
-            label: s.goToSettings,
-            onPressed: () => Navigator.push(
-              context,
-              MaterialPageRoute(builder: (_) => const SettingsScreen()),
-            ),
-          ),
-        ),
-      );
-      return;
-    }
-
-    // Check server-side 30-day limit
-    final remaining = await _supabase.getRemainingAnalyses();
-    if (!mounted) return;
-    if (remaining <= 0) {
-      await Navigator.push(
-        context,
-        MaterialPageRoute(builder: (_) => const PaywallScreen()),
-      );
-      return;
+    if (tier == 'free') {
+      final remaining = await _supabase.getRemainingAnalyses();
+      if (!mounted) return;
+      if (remaining <= 0) {
+        await Navigator.push(
+          context,
+          MaterialPageRoute(builder: (_) => const PaywallScreen()),
+        );
+        return;
+      }
     }
 
     setState(() => _loading = true);
 
     try {
-      final result = await _openAI.analyzePlant(
-          _image!, apiKey, s.aiLanguageName);
+      final result = await _supabase.analyzePlant(_image!, s.aiLanguageName);
       final savedPath = await _storage.saveImage(_image!);
 
       final toxicityData = result['toxicity'] as Map<String, dynamic>?;
