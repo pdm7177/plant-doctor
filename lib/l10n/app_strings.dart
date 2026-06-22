@@ -67,7 +67,7 @@ class AppStrings {
       'paywallTitle': 'Преміум доступ',
       'paywallSubtitle': 'Ліміт безкоштовних аналізів вичерпано',
       'paywallDesc':
-          'Ви використали 5 безкоштовних аналізів цього місяця. Оформіть підписку щоб продовжити.',
+          'Ви використали 5 безкоштовних аналізів за останні 30 днів. Оформіть підписку щоб продовжити.',
       'paywallPrice': 'Підписатися — \$4.99/місяць',
       'paywallBack': 'Повернутися назад',
       'paywallFreeLeft': 'Безкоштовних аналізів залишилось:',
@@ -82,6 +82,10 @@ class AppStrings {
       'loginSubtitle': 'Діагностика рослин за допомогою ШІ',
       'loginWithGoogle': 'Увійти через Google',
       'loginPrivacyNote': 'Входячи, ви погоджуєтесь з Політикою конфіденційності',
+      'account': 'Акаунт',
+      'signOutBtn': 'Вийти з акаунту',
+      'signOutTitle': 'Вийти?',
+      'signOutMsg': 'Ви впевнені, що хочете вийти з акаунту?',
       'recWatering': 'Полив',
       'recLight': 'Освітлення',
       'recTemperature': 'Температура',
@@ -159,7 +163,7 @@ class AppStrings {
       'paywallTitle': 'Premium access',
       'paywallSubtitle': 'Free analysis limit reached',
       'paywallDesc':
-          'You have used 5 free analyses this month. Subscribe to continue.',
+          'You have used 5 free analyses in the last 30 days. Subscribe to continue.',
       'paywallPrice': 'Subscribe — \$4.99/month',
       'paywallBack': 'Go back',
       'paywallFreeLeft': 'Free analyses remaining:',
@@ -174,6 +178,10 @@ class AppStrings {
       'loginSubtitle': 'AI-powered plant health diagnosis',
       'loginWithGoogle': 'Sign in with Google',
       'loginPrivacyNote': 'By signing in, you agree to our Privacy Policy',
+      'account': 'Account',
+      'signOutBtn': 'Sign Out',
+      'signOutTitle': 'Sign Out?',
+      'signOutMsg': 'Are you sure you want to sign out?',
       'recWatering': 'Watering',
       'recLight': 'Light',
       'recTemperature': 'Temperature',
@@ -251,7 +259,7 @@ class AppStrings {
       'paywallTitle': 'Acceso premium',
       'paywallSubtitle': 'Límite de análisis gratuitos alcanzado',
       'paywallDesc':
-          'Has usado 5 análisis gratuitos este mes. Suscríbete para continuar.',
+          'Has usado 5 análisis gratuitos en los últimos 30 días. Suscríbete para continuar.',
       'paywallPrice': 'Suscribirse — \$4.99/mes',
       'paywallBack': 'Volver',
       'paywallFreeLeft': 'Análisis gratuitos restantes:',
@@ -266,6 +274,10 @@ class AppStrings {
       'loginSubtitle': 'Diagnóstico de plantas con IA',
       'loginWithGoogle': 'Iniciar sesión con Google',
       'loginPrivacyNote': 'Al iniciar sesión, aceptas nuestra Política de privacidad',
+      'account': 'Cuenta',
+      'signOutBtn': 'Cerrar sesión',
+      'signOutTitle': '¿Cerrar sesión?',
+      'signOutMsg': '¿Seguro que quieres cerrar sesión?',
       'recWatering': 'Riego',
       'recLight': 'Luz',
       'recTemperature': 'Temperatura',
@@ -343,7 +355,7 @@ class AppStrings {
       'paywallTitle': 'Премиум доступ',
       'paywallSubtitle': 'Лимит бесплатных анализов исчерпан',
       'paywallDesc':
-          'Вы использовали 5 бесплатных анализов в этом месяце. Оформите подписку чтобы продолжить.',
+          'Вы использовали 5 бесплатных анализов за последние 30 дней. Оформите подписку чтобы продолжить.',
       'paywallPrice': 'Подписаться — \$4.99/месяц',
       'paywallBack': 'Вернуться назад',
       'paywallFreeLeft': 'Бесплатных анализов осталось:',
@@ -358,6 +370,10 @@ class AppStrings {
       'loginSubtitle': 'Диагностика растений с помощью ИИ',
       'loginWithGoogle': 'Войти через Google',
       'loginPrivacyNote': 'Входя, вы соглашаетесь с Политикой конфиденциальности',
+      'account': 'Аккаунт',
+      'signOutBtn': 'Выйти из аккаунта',
+      'signOutTitle': 'Выйти?',
+      'signOutMsg': 'Вы уверены, что хотите выйти из аккаунта?',
       'recWatering': 'Полив',
       'recLight': 'Освещение',
       'recTemperature': 'Температура',
@@ -435,7 +451,7 @@ class AppStrings {
       'paywallTitle': 'Premium-Zugang',
       'paywallSubtitle': 'Limit für kostenlose Analysen erreicht',
       'paywallDesc':
-          'Du hast 5 kostenlose Analysen diesen Monat verwendet. Abonnieren um fortzufahren.',
+          'Du hast 5 kostenlose Analysen in den letzten 30 Tagen verwendet. Abonnieren um fortzufahren.',
       'paywallPrice': 'Abonnieren — \$4.99/Monat',
       'paywallBack': 'Zurück',
       'paywallFreeLeft': 'Kostenlose Analysen übrig:',
@@ -450,6 +466,10 @@ class AppStrings {
       'loginSubtitle': 'KI-gestützte Pflanzendiagnose',
       'loginWithGoogle': 'Mit Google anmelden',
       'loginPrivacyNote': 'Durch die Anmeldung stimmst du unserer Datenschutzrichtlinie zu',
+      'account': 'Konto',
+      'signOutBtn': 'Abmelden',
+      'signOutTitle': 'Abmelden?',
+      'signOutMsg': 'Möchtest du dich wirklich abmelden?',
       'recWatering': 'Bewässerung',
       'recLight': 'Licht',
       'recTemperature': 'Temperatur',
@@ -527,7 +547,7 @@ class AppStrings {
       'paywallTitle': 'Accès premium',
       'paywallSubtitle': "Limite d'analyses gratuites atteinte",
       'paywallDesc':
-          "Vous avez utilisé 5 analyses gratuites ce mois-ci. Abonnez-vous pour continuer.",
+          "Vous avez utilisé 5 analyses gratuites au cours des 30 derniers jours. Abonnez-vous pour continuer.",
       'paywallPrice': "S'abonner — \$4.99/mois",
       'paywallBack': 'Retour',
       'paywallFreeLeft': 'Analyses gratuites restantes :',
@@ -542,6 +562,10 @@ class AppStrings {
       'loginSubtitle': 'Diagnostic de plantes par IA',
       'loginWithGoogle': 'Se connecter avec Google',
       'loginPrivacyNote': 'En vous connectant, vous acceptez notre Politique de confidentialité',
+      'account': 'Compte',
+      'signOutBtn': 'Se déconnecter',
+      'signOutTitle': 'Se déconnecter ?',
+      'signOutMsg': 'Êtes-vous sûr de vouloir vous déconnecter ?',
       'recWatering': 'Arrosage',
       'recLight': 'Lumière',
       'recTemperature': 'Température',
@@ -634,6 +658,10 @@ class AppStrings {
   String get loginSubtitle => get('loginSubtitle');
   String get loginWithGoogle => get('loginWithGoogle');
   String get loginPrivacyNote => get('loginPrivacyNote');
+  String get account => get('account');
+  String get signOutBtn => get('signOutBtn');
+  String get signOutTitle => get('signOutTitle');
+  String get signOutMsg => get('signOutMsg');
   String get privacyPolicy => get('privacyPolicy');
   String get deleteDataBtn => get('deleteDataBtn');
   String get deleteDataTitle => get('deleteDataTitle');

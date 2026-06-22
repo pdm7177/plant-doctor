@@ -79,10 +79,10 @@ class _AnalyzeScreenState extends State<AnalyzeScreen> {
       return;
     }
 
-    // Check monthly free limit
-    final count = await _storage.getMonthlyAnalysisCount();
+    // Check server-side 30-day limit
+    final remaining = await _supabase.getRemainingAnalyses();
     if (!mounted) return;
-    if (count >= StorageService.freeLimit) {
+    if (remaining <= 0) {
       await Navigator.push(
         context,
         MaterialPageRoute(builder: (_) => const PaywallScreen()),
@@ -119,7 +119,6 @@ class _AnalyzeScreenState extends State<AnalyzeScreen> {
       );
 
       await _storage.saveAnalysis(analysis);
-      await _storage.incrementAnalysisCount();
       await _supabase.saveAnalysis(analysis, s.aiLanguageName);
 
       if (!mounted) return;
@@ -222,12 +221,18 @@ class _AnalyzeScreenState extends State<AnalyzeScreen> {
                 ],
               ),
               const SizedBox(height: 12),
-              FilledButton.icon(
-                onPressed: (_image == null || _loading) ? null : _analyze,
-                icon: const Icon(Icons.search),
-                label: Text(_image == null ? s.selectOrPhoto : s.analyzeBtn),
-                style: FilledButton.styleFrom(
-                  minimumSize: const Size(double.infinity, 56),
+              Visibility(
+                visible: _image != null,
+                maintainSize: true,
+                maintainAnimation: true,
+                maintainState: true,
+                child: FilledButton.icon(
+                  onPressed: (_image == null || _loading) ? null : _analyze,
+                  icon: const Icon(Icons.search),
+                  label: Text(s.analyzeBtn),
+                  style: FilledButton.styleFrom(
+                    minimumSize: const Size(double.infinity, 56),
+                  ),
                 ),
               ),
             ],
