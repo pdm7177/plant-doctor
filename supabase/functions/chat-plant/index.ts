@@ -85,7 +85,7 @@ Deno.serve(async (req) => {
         'Authorization': `Bearer ${openaiKey}`,
       },
       body: JSON.stringify({
-        model: 'gpt-4o',
+        model: 'gpt-4o-mini',
         max_tokens: 800,
         messages: [
           { role: 'system', content: systemPrompt },
